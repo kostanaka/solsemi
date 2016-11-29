@@ -1,0 +1,21 @@
+---
+- name: chrony update and set leapsecmode to slew
+  hosts: all
+  become: yes
+  become_user: root
+  tasks:
+
+  - name: stop chronyd service
+    service: name=chronyd state=stopped
+    
+  - name: update chrony package for leapsecmode
+    yum: name=chrony state=latest
+
+  - name: set leapsecmode to slew
+    lineinfile:
+      dest: /etc/chrony.conf
+      regexp: '^leapsecmode.*$'
+      line: 'leapsecmode slew'
+
+  - name: restart chronyd service
+    service: name=chronyd state=started
