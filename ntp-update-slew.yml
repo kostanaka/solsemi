@@ -1,0 +1,24 @@
+---
+- name: update and increase step threshold (-x)
+  hosts: all
+  become: yes
+  become_user: root
+  tasks:
+
+  - name: stop ntp service
+    service: name=ntpd state=stopped
+    
+  - name: update ntp package for xleap.patch
+    yum: name=ntp state=latest
+
+  - name: reset kernel status and freq
+    command: /usr/sbin/ntptime -s 0 -f 0
+
+  - name: set -x option /etc/sysconfig/ntpd
+    replace:
+      dest: /etc/sysconfig/ntpd
+      regexp: '^OPTIONS.*$'
+      replace: 'OPTIONS="-u ntp:ntp -p /var/run/ntpd.pid -g -x"'
+
+  - name: restart ntpd
+    service: name=ntpd state=started
