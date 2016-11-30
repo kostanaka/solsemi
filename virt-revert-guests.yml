@@ -1,0 +1,36 @@
+---
+- name: revert to initial snapshot and restart
+  hosts: all
+  vars:
+    guests:
+      - RHEL6x
+      - RHEL6y
+      - RHEL6z
+      - RHEL7x
+      - RHEL7y
+      - RHEL7z
+
+  become: yes
+  become_user: root
+
+  tasks:
+    - name: shutdown each guests
+      virt: name={{ item }} state=shutdown
+      with_items: "{{ guests }}"
+
+    - name: sleep 5 sec
+      command: sleep 5
+
+    - name: ensure guests stopped
+      virt: name={{ item }} state=shutdown
+      with_items: "{{ guests }}"
+      register: result
+      failed_when: result.changed == true
+
+    - name: revert snapshot to init state
+      command: /usr/bin/qemu-img snapshot -a init /images/qemu/{{ item }}.qcow2
+      with_items: "{{ guests }}"
+
+    - name: restart all guests
+      virt: name={{ item }} state=running
+      with_items: "{{ guests }}"
