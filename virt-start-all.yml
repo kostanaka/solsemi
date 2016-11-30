@@ -1,0 +1,20 @@
+---
+- name: Start all guests
+  hosts: all
+  vars:
+    guests:
+      - RHEL6x
+      - RHEL6y
+      - RHEL6z
+      - RHEL7x
+      - RHEL7y
+      - RHEL7z
+
+  become: yes
+  become_user: root
+
+  tasks:
+
+    - name: start all guests
+      virt: name={{ item }} state=running
+      with_items: "{{ guests }}"

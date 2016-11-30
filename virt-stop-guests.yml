@@ -1,0 +1,19 @@
+---
+- name: Stop all guests
+  hosts: all
+  vars:
+    guests:
+      - RHEL6x
+      - RHEL6y
+      - RHEL6z
+      - RHEL7x
+      - RHEL7y
+      - RHEL7z
+
+  become: yes
+  become_user: root
+
+  tasks:
+    - name: shutdown each guests
+      virt: name={{ item }} state=shutdown
+      with_items: "{{ guests }}"
