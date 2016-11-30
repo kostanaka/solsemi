@@ -1,0 +1,19 @@
+---
+- name: stop ntp and increase step threshold (-x) (and stay stopped)
+  hosts: all
+  become: yes
+  become_user: root
+  tasks:
+
+  - name: stop ntp service
+    service: name=ntpd state=stopped
+    
+  - name: reset kernel status and freq
+    command: /usr/sbin/ntptime -s 0 -f 0
+
+  - name: set -x option /etc/sysconfig/ntpd
+    replace:
+      dest: /etc/sysconfig/ntpd
+      regexp: '^OPTIONS.*$'
+      replace: 'OPTIONS="-u ntp:ntp -p /var/run/ntpd.pid -g -x"'
+
