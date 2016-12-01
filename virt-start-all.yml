@@ -15,6 +15,9 @@
 
   tasks:
 
+    - name: ensure default network is active
+      virt_net: name=default state=active
+
     - name: start all guests
       virt: name={{ item }} state=running
       with_items: "{{ guests }}"
