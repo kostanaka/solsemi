@@ -1,21 +1,21 @@
 ---
-- name: chrony update and set leapsecmode to slew
+- name: chronyパッケージ更新と、leapsecmodeをslewに変更
   hosts: all
   become: yes
   become_user: root
   tasks:
 
-  - name: stop chronyd service
+  - name: chronydサービスの停止
     service: name=chronyd state=stopped
     
-  - name: update chrony package for leapsecmode
+  - name: chronyパッケージの更新
     yum: name=chrony state=latest
 
-  - name: set leapsecmode to slew
+  - name: /etc/chrony.confへleapsecmode slew設定を追加
     lineinfile:
       dest: /etc/chrony.conf
       regexp: '^leapsecmode.*$'
       line: 'leapsecmode slew'
 
-  - name: restart chronyd service
+  - name: chronydサービスのリスタート
     service: name=chronyd state=started

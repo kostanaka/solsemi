@@ -1,5 +1,5 @@
 ---
-- name: update and increase step threshold (-x)
+- name: ntpパッケージを更新し、起動時の-xオプション追加
   hosts: all
   become: yes
   become_user: root
