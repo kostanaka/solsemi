@@ -5,20 +5,20 @@
   become_user: root
   tasks:
 
-  - name: stop ntp service
+  - name: ntpdサービスの停止
     service: name=ntpd state=stopped
     
-  - name: update ntp package for xleap.patch
+  - name: ntpパッケージのアップデート(for xleap.patch)
     yum: name=ntp state=latest
 
-  - name: reset kernel status and freq
+  - name: カーネルのステータスリセット(ntptime -s 0 -f 0)
     command: /usr/sbin/ntptime -s 0 -f 0
 
-  - name: set -x option /etc/sysconfig/ntpd
+  - name: /etc/sysconfig/ntpd への -x オプション追加
     replace:
       dest: /etc/sysconfig/ntpd
       regexp: '^OPTIONS.*$'
       replace: 'OPTIONS="-u ntp:ntp -p /var/run/ntpd.pid -g -x"'
 
-  - name: restart ntpd
+  - name: ntpdリスタート
     service: name=ntpd state=started

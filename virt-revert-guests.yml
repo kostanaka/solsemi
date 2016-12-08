@@ -2,6 +2,7 @@
 - name: revert to initial snapshot and restart
   hosts: all
   vars:
+    snap_name: init2
     guests:
       - RHEL6x
       - RHEL6y
@@ -28,7 +29,7 @@
       failed_when: result.changed == true
 
     - name: revert snapshot to init state
-      command: /usr/bin/qemu-img snapshot -a init /images/qemu/{{ item }}.qcow2
+      command: /usr/bin/qemu-img snapshot -a {{ snap_name }} /images/qemu/{{ item }}.qcow2
       with_items: "{{ guests }}"
 
     - name: restart all guests
