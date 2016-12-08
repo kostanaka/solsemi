@@ -1,0 +1,18 @@
+---
+- name: update repository setting for demo (ntp/chrony)
+  hosts: all
+  become: yes
+  become_user: root
+  tasks:
+
+  - name: disable Red Hat repository
+    command: subscription-manager repos --disable='*'
+    
+  - name: setup repository for demo
+    yum_repository:
+      name: demo
+      description: demo repository for ansible playbook ntp/chrony
+      file: demo
+      baseurl: http://master.example.osaka.redhat.com/repo/$releasever-demo
+      gpgcheck: no
+      enabled: yes
