@@ -1,0 +1,13 @@
+---
+- name: 必須エラータ対応(CY17Q2)
+  hosts: all
+    
+  become: yes
+  become_user: root
+
+  tasks:
+
+  - name: 選択パッケージアップデート(kernel, glibc)
+    yum:
+      name: kernel, glibc
+      state: latest
