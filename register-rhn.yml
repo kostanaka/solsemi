@@ -1,0 +1,21 @@
+---
+- name: カスタマーポータルへの登録とサブスクリプション＆リポジトリ設定
+  hosts: all
+  vars:
+    - org: 6035660
+    - activationkey: my-subs-for-vm
+    
+  become: yes
+  become_user: root
+  tasks:
+
+  - name: Subscription Managementへの登録
+    redhat_subscription:
+      org_id: '{{org}}'
+      activationkey: '{{activationkey}}'
+
+  - name: リポジトリ設定(全てを一旦無効に)
+    command: subscription-manager repos --disable='*'
+
+  - name: リポジトリ設定(RHEL7ベースのみを有効に)
+    command: subscription-manager repos  --enable=rhel-7-server-rpms
