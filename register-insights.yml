@@ -15,5 +15,5 @@
     register: unreg
 
   - name: 登録
-    command: redhat-access-insights --register creates=/etc/redhat-access-insights/.registered
+    shell: redhat-access-insights --register
     when: unreg.stat.exists == false
