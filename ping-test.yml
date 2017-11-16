@@ -1,0 +1,11 @@
+---
+- name: Pingモジュールによるアクセス確認
+  hosts: all
+    
+  become: yes
+  become_user: root
+  tasks:
+
+  - name: pingによる生死確認
+    ping:
+
