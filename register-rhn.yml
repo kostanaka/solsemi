@@ -2,8 +2,8 @@
 - name: カスタマーポータルへの登録とサブスクリプション＆リポジトリ設定
   hosts: all
   vars:
-    - org: 6035660
-    - activationkey: my-subs-for-vm
+    - org: 99999999
+    - activationkey: dummy-key
     
   become: yes
   become_user: root
