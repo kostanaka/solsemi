@@ -1,0 +1,19 @@
+---
+- name: Insights & Subscription管理からの登録削除
+  hosts: all
+    
+  become: yes
+  become_user: root
+
+  tasks:
+
+  - name: Insightsの登録状況の確認
+    stat: path=/etc/redhat-access-insights/.registered
+    register: unreg
+
+  - name: Insights登録削除
+    shell: redhat-access-insights --unregister
+    when: unreg.stat.exists == true
+
+  - name: Subscription管理からの削除
+    shell: subscription-manager unregister
