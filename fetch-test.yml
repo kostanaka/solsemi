@@ -8,4 +8,4 @@
   - name: fetch /etc/hosts from remote host
     fetch:
       src: /etc/hosts
-      dest: /tmp
+      dest: /var/tmp
