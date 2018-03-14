@@ -1,0 +1,11 @@
+---
+- name: fetch test
+  hosts: all
+  become: yes
+  become_user: root
+  tasks:
+
+  - name: fetch /etc/hosts from remote host
+    fetch:
+      src: /etc/hosts
+      dest: /tmp
