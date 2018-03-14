@@ -1,7 +1,7 @@
 ---
 - name: fetch test
   hosts: all
-  become: yes
+  become: no
   become_user: root
   tasks:
 
