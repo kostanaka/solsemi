@@ -3,9 +3,12 @@
   hosts: all
   become: yes
   become_user: root
+  vars:
+    - fetch_src: /etc/hosts
+    - fetch_dest: /var/tmp
   tasks:
 
   - name: fetch /etc/hosts from remote host
     fetch:
-      src: /etc/hosts
-      dest: /var/tmp
+      src: '{{fetch_src}}'
+      dest: '{{fetch_dest}}'
