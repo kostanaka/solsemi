@@ -1,5 +1,5 @@
 ---
-- name: 仮想マシンの起動
+- name: 仮想マシンスタート
   hosts: all
   connection: local
 
@@ -8,7 +8,7 @@
 
   tasks:
 
-  - name: 仮想マシン用のネットワーク(default)が起動していることを確認
+  - name: 仮想マシン用ネットワーク(default)の起動確認
     virt_net: name=default state=active
 
   - name: 仮想マシンの起動
