@@ -1,17 +1,20 @@
 ---
-- name: 仮想マシンスタート
+- name: 仮想マシンの開始
   hosts: all
-  connection: local
+  vars:
+    guests:
+      - RHEL7x
+      - RHEL7y
+      - RHEL7z
 
-#  become: yes
-#  become_user: root
+  become: yes
+  become_user: root
 
   tasks:
 
-  - name: 仮想マシン用ネットワーク(default)の起動確認
+  - name: 仮想マシン用ネットワーク(default)の開始
     virt_net: name=default state=active
-    delegate_to: 192.168.122.1
 
   - name: 仮想マシンの起動
-    virt: name={{ inventory_hostname }} state=running
-    delegate_to: 192.168.122.1
+    virt: name={{ item }} state=running
+    with_items: "{{ guests }}"
