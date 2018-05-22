@@ -1,7 +1,7 @@
 ---
 - name: 仮想マシンスタート
   hosts: all
-#  connection: local
+  connection: local
 
   become: yes
   become_user: root
