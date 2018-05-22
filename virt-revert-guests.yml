@@ -11,8 +11,10 @@
   tasks:
     - name: 仮想マシンがシャットダウンされていることを確認
       virt: name={{ inventory_hostname }} state=shutdown
+      delegate_to: master
       register: result
       failed_when: result.changed == true
 
     - name: スナップショットからの復元処理
       command: /usr/bin/qemu-img snapshot -a {{ snap_name }} /images/qemu/{{ inventory_hostname }}.qcow2
+      delegate_to: master
