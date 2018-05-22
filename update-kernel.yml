@@ -1,0 +1,13 @@
+---
+- name: kernelとglibcのアップデート
+  hosts: all
+    
+  become: yes
+  become_user: root
+
+  tasks:
+
+  - name: kernelとglibcパッケージアップデート
+    yum:
+      name: kernel, glibc
+      state: latest
