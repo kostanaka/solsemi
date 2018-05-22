@@ -1,23 +1,15 @@
 ---
-- name: Start all guests
+- name: 仮想マシンの起動
   hosts: all
-  vars:
-    guests:
-      - RHEL6x
-      - RHEL6y
-      - RHEL6z
-      - RHEL7x
-      - RHEL7y
-      - RHEL7z
+  connection: local
 
   become: yes
   become_user: root
 
   tasks:
 
-    - name: ensure default network is active
-      virt_net: name=default state=active
+  - name: 仮想マシン用のネットワーク(default)が起動していることを確認
+    virt_net: name=default state=active
 
-    - name: start all guests
-      virt: name={{ item }} state=running
-      with_items: "{{ guests }}"
+  - name: 仮想マシンの起動
+    virt: name={{ inventory_hostname }} state=running

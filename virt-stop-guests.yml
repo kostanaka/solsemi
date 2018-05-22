@@ -1,19 +1,11 @@
 ---
-- name: Stop all guests
+- name: 仮想マシンのシャットダウン
   hosts: all
-  vars:
-    guests:
-      - RHEL6x
-      - RHEL6y
-      - RHEL6z
-      - RHEL7x
-      - RHEL7y
-      - RHEL7z
+  connection: local
 
   become: yes
   become_user: root
 
   tasks:
-    - name: shutdown each guests
-      virt: name={{ item }} state=shutdown
-      with_items: "{{ guests }}"
+  - name: 仮想マシンのシャットダウン
+    virt: name={{ inventory_hostname }} state=shutdown
