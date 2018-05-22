@@ -2,7 +2,7 @@
 - name: 仮想マシンを初期状態に戻す
   hosts: all
   vars:
-    snap_name: 20180522
+    snap_name: init
     guests:
       - RHEL7x
       - RHEL7y
