@@ -9,20 +9,10 @@
   connection: local
 
   tasks:
-    - name: 各ゲストをシャットダウンします
-      virt: name={{ inventory_hostname }} state=shutdown
-
-    - name: 10秒待ち...
-      command: sleep 10
-
-    - name: シャットダウンされたことを確認
+    - name: 仮想マシンがシャットダウンされていることを確認
       virt: name={{ inventory_hostname }} state=shutdown
       register: result
       failed_when: result.changed == true
 
     - name: スナップショットからの復元処理
       command: /usr/bin/qemu-img snapshot -a {{ snap_name }} /images/qemu/{{ inventory_hostname }}.qcow2
-
-#    - name: restart all guests
-#      virt: name={{ item }} state=running
-#      with_items: "{{ guests }}"
