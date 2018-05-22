@@ -1,21 +1,26 @@
 ---
-- name: 仮想マシンのシャットダウン
+- name: 仮想マシンの停止
   hosts: all
-  connection: local
+  vars:
+    guests:
+      - RHEL7x
+      - RHEL7y
+      - RHEL7z
 
   become: yes
   become_user: root
 
   tasks:
-  - name: 仮想マシンのシャットダウン
-    virt: name={{ inventory_hostname }} state=shutdown
-    delegate_to: master
 
-  - name: 10秒待ち...
+  - name: 仮想マシンを停止
+    virt: name={{ item }} state=shutdown
+    with_items: "{{ guests }}"
+
+  - name: 10秒待ち..
     command: sleep 10
 
-  - name: シャットダウンされたことを確認
-    virt: name={{ inventory_hostname }} state=shutdown
-    delegate_to: master
+  - name: 仮想マシンの停止を確認
+    virt: name={{ item }} state=shutdown
+    with_items: "{{ guests }}"
     register: result
     failed_when: result.changed == true
