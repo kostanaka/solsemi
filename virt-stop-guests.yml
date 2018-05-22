@@ -16,8 +16,8 @@
     virt: name={{ item }} state=shutdown
     with_items: "{{ guests }}"
 
-  - name: 10秒待ち..
-    command: sleep 10
+  - name: 20秒待ち..
+    command: sleep 20
 
   - name: 仮想マシンの停止を確認
     virt: name={{ item }} state=shutdown
