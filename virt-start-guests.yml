@@ -10,6 +10,8 @@
 
   - name: 仮想マシン用ネットワーク(default)の起動確認
     virt_net: name=default state=active
+    delegate_to: master
 
   - name: 仮想マシンの起動
     virt: name={{ inventory_hostname }} state=running
+    delegate_to: master
