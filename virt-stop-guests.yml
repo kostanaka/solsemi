@@ -9,3 +9,11 @@
   tasks:
   - name: 仮想マシンのシャットダウン
     virt: name={{ inventory_hostname }} state=shutdown
+
+  - name: 10秒待ち...
+    command: sleep 10
+
+  - name: シャットダウンされたことを確認
+    virt: name={{ inventory_hostname }} state=shutdown
+    register: result
+    failed_when: result.changed == true
