@@ -11,7 +11,12 @@
   tasks:
 
   - name: Satellite登録のための基本パッケージ追加
-    shell: yum -y --nogpgcheck localinstall http://{{satellite}}/pub/katello-ca-consumer-latest.noarch.rpm
+    yum:
+      name: "http://{{satellite}}/pub/katello-ca-consumer-latest.noarch.rpm"
+      state: present
+      validate_certs: no
+      
+#    shell: yum -y --nogpgcheck localinstall http://{{satellite}}/pub/katello-ca-consumer-latest.noarch.rpm
 
   - name: Satelliteへの登録
     redhat_subscription:
