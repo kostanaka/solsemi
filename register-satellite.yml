@@ -23,8 +23,8 @@
       org_id: '{{org}}'
       activationkey: '{{activationkey}}'
 
-  - name: Satellite6用toolリポジトリの有効化
-    shell: subscription-manager repos --enable=rhel-7-server-satellite-tools-6.3-rpms
+#  - name: Satellite6用toolリポジトリの有効化
+#    shell: subscription-manager repos --enable=rhel-7-server-satellite-tools-6.3-rpms
 
   - name: Satelliteエージェントの導入
     yum: name=katello-agent state=latest
