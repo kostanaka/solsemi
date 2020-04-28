@@ -10,4 +10,4 @@
   - name: podmanをインストール
     yum:
       name: podman
-      state: present
+      state: latest
