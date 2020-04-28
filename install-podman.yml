@@ -1,0 +1,13 @@
+---
+- name: podmanをインストール
+  hosts: all
+    
+  become: yes
+  become_user: root
+
+  tasks:
+
+  - name: podmanをインストール
+    yum:
+      name: podman
+      state: latest
